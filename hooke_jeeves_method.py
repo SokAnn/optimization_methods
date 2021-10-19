@@ -46,7 +46,7 @@ if __name__ == "__main__":
             x_i[0] = res[0]
             optimizations += 1
         if k == 2:
-            f = lambda x2: np.sqrt(pow(x_i_0[0], 2) + 4) + np.sqrt(pow((x2 - x_i_0[0]), 2) + 16) + np.sqrt(pow((x2 - 5), 2) + 9)
+            f = lambda x2: np.sqrt(pow(x_i[0], 2) + 4) + np.sqrt(pow((x2 - x_i[0]), 2) + 16) + np.sqrt(pow((x2 - 5), 2) + 9)
             res = fmin(f, x_i_0[1], disp=False)
             x_i[1] = res[0]
             optimizations += 1
