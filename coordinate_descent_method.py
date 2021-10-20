@@ -17,7 +17,11 @@ if __name__ == "__main__":
     plt.title("График поверхности")
     plt.xlabel("x1")
     plt.ylabel("x2")
+    plt.show()
 
+    fig1 = plt.contour(x1, x2, y, 15)
+    plt.clabel(fig1, inline='True')
+    plt.title("Поиск минимума методом покоординатного спуска")
     t1 = time.time()
     # метод покоординатного спуска
     A1 = A2 = 0
@@ -45,9 +49,11 @@ if __name__ == "__main__":
             res = fmin(f, x_i_0[0], disp=False)
             x_i[0] = res[0]
             optimizations += 1
+            plt.plot([x_i_0[0], x_i[0]], [x_i_0[1], x_i[1]], color="magenta")
         if k == 2:
             f = lambda x2: np.sqrt(pow(x_i[0], 2) + 4) + np.sqrt(pow((x2 - x_i[0]), 2) + 16) + np.sqrt(pow((x2 - 5), 2) + 9)
             res = fmin(f, x_i_0[1], disp=False)
+            plt.plot([x_i[0], x_i[0]], [x_i[1], res[0]], color="magenta")
             x_i[1] = res[0]
             optimizations += 1
         # step 5

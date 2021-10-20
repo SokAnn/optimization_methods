@@ -17,7 +17,11 @@ if __name__ == "__main__":
     plt.title("График поверхности")
     plt.xlabel("x1")
     plt.ylabel("x2")
+    plt.show()
 
+    fig1 = plt.contour(x1, x2, y, 15)
+    plt.clabel(fig1, inline='True')
+    plt.title("Поиск минимума методом Розенброка")
     t1 = time.time()
     # метод Розенброка
     A1 = A2 = 0
@@ -45,9 +49,11 @@ if __name__ == "__main__":
                 res = fmin(f, x_i_0[0], disp=False)
                 x_i[0] = res[0]
                 optimizations += 1
+                plt.plot([x_i_0[0], x_i[0]], [x_i_0[1], x_i[1]], color="magenta")
             if k == 2:
                 f = lambda x2: np.sqrt(pow(x_i[0], 2) + 4) + np.sqrt(pow((x2 - x_i[0]), 2) + 16) + np.sqrt(pow((x2 - 5), 2) + 9)
                 res = fmin(f, x_i_0[1], disp=False)
+                plt.plot([x_i[0], x_i[0]], [x_i[1], res[0]], color="magenta")
                 x_i[1] = res[0]
                 optimizations += 1
             for i in range(len(e_i)):
@@ -69,6 +75,7 @@ if __name__ == "__main__":
             temp = res[0]
             x_ii[0] = x_i[0] + temp * (x_i[0] - x_i_0[0])
             x_ii[1] = x_i[1] + temp * (x_i[1] - x_i_0[1])
+            plt.plot([x_i[0], x_ii[0]], [x_i[1], x_ii[1]], color="blue")
             print(f"iter = {iterations}\n\tx01 = {x_i_0[0]}\tx02 = {x_i_0[1]}\n\tx1 = {x_i[0]}\tx2 = {x_i[1]}\n\tx11 = {x_ii[0]}\tx22 = {x_ii[1]}\n\toptimizations = {optimizations}")
             optimizations = 0
 
@@ -82,6 +89,7 @@ if __name__ == "__main__":
             temp = res[0]
             x_iii[0] = x_ii[0] + temp * (x_i[1] - x_i_0[1])
             x_iii[1] = x_ii[1] + temp * (x_i[0] - x_i_0[0])
+            plt.plot([x_ii[0], x_iii[0]], [x_ii[1], x_iii[1]], color="green")
             print(
                 f"iter = {iterations}\n\tx01 = {x_i_0[0]}\tx02 = {x_i_0[1]}\n\tx1 = {x_i[0]}\tx2 = {x_i[1]}\n\tx11 = "
                 f"{x_ii[0]}\tx22 = {x_ii[1]}\n\tx111 = {x_iii[0]}\tx222 = {x_iii[1]}\n\toptimizations = {optimizations}")
