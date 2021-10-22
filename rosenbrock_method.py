@@ -1,6 +1,6 @@
-'''
+"""
 метод Розенброка (многомерная безусловная оптимизация)
-'''
+"""
 
 import numpy as np
 import matplotlib.pyplot as plt
