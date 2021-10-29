@@ -27,7 +27,7 @@ if __name__ == "__main__":
     t1 = time.time()
     # метод пчелиной колонии
     e = 0.0001
-    t_max = 0
+    t_max = 10
     left = -10
     right = 10
     step = 0
@@ -36,7 +36,8 @@ if __name__ == "__main__":
     iterations = 0
     # parameters
     s = 10
-    X = np.zeros((3, s))
+    # X = np.zeros((3, s))
+    X = [[0] * s for i in range(3)]
     B = 3
     G = 3
     b = 2
@@ -46,15 +47,23 @@ if __name__ == "__main__":
     y_m = 0
     f_m = 0
     while flag < 1:
+        # print("X:\n", X)
+        # print("type(X):\n", type(X))
+        # X = [[0] * s for i in range(3)]
+        # print("X:\n", X)
+        # print("type(X):\n", type(X))
+        # print("---------------")
+
         iterations += 1
+        print(f"\n\t\t\t\t\titeration # {iterations}")
         if step != 3 and step != 4:
             # step 1
             for i in range(0, s):
                 X[0][i] = random.uniform(left, right)
                 X[1][i] = random.uniform(left, right)
                 X[2][i] = -0.0001 * (abs(np.sin(X[0][i]) * np.sin(X[1][i]) * np.exp(abs(100 - (X[0][i] ** 2 + X[1][i] ** 2) ** 0.5 / np.pi))) + 1) ** 0.1
-        # print("X:\n", X)
-        # print("---------------")
+            print("X:\n", X)
+            # print("---------------")
 
             # step 2
             f_m = min(X[2][:])
@@ -80,12 +89,16 @@ if __name__ == "__main__":
                         X[0][j], X[0][j + 1] = X[0][j + 1], X[0][j]
                         X[1][j], X[1][j + 1] = X[1][j + 1], X[1][j]
                         X[2][j], X[2][j + 1] = X[2][j + 1], X[2][j]
-        X_B = X[:, 0:B]
+        X_B = []
+        X_B.append(X[0][0:B])
+        X_B.append(X[1][0:B])
+        X_B.append(X[2][0:B])
         # print("X_B:\n", X_B)
         # print("---------------")
 
         # step 5
-        X_b = np.zeros((3, B * b))
+        # X_b = np.zeros((3, B * b))
+        X_b = [[0] * B * b for i in range(3)]
         k = 0
         for i in range(0, B):
             for j in range(0, b):
@@ -98,12 +111,16 @@ if __name__ == "__main__":
         # print("---------------")
 
         # step 6
-        X_G = X[:, B:B + G]
+        X_G = []
+        X_G.append(X[0][B:B + G])
+        X_G.append(X[1][B:B + G])
+        X_G.append(X[2][B:B + G])
         # print("X_G:\n", X_G)
         # print("---------------")
 
         # step 7
-        X_g = np.zeros((3, G * g))
+        # X_g = np.zeros((3, G * g))
+        X_g = [[0] * G * g for i in range(3)]
         k = 0
         for i in range(0, G):
             for j in range(0, g):
@@ -115,7 +132,8 @@ if __name__ == "__main__":
         # print("---------------")
 
         # step 8
-        X_s = np.zeros((3, s - B - G))
+        # X_s = np.zeros((3, s - B - G))
+        X_s = [[0] * (s - B - G) for i in range(3)]
         # print("X_s:\n", X_s)
         for i in range(0, s - B - G):
             X_s[0][i] = random.uniform(left, right)
@@ -125,12 +143,20 @@ if __name__ == "__main__":
         # print("---------------")
 
         # step 9
-        X = []
-        X = [X_B[:, :], X_G[:, :], X_b[:, :], X_g[:, :], X_s[:, :]]
+        X = X_B[:]
+        # print("X:\n", X)
+        temp = [X_G[:], X_b[:], X_g[:], X_s[:]]
+        for i in range(len(temp)):
+            X[0] = X[0] + temp[i][0]
+            X[1] = X[1] + temp[i][1]
+            X[2] = X[2] + temp[i][2]
+        print("X:\n", X)
+        # print("type(X):\n", type(X))
         # print("X:\n", X)
 
         # step 10
-        # error ########################################################################################################
+        x_x = X[0][0]
+        y_x = X[1][0]
         f_x = X[2][0]
         for i in range(1, len(X)):
             if X[2][i] < f_x:
@@ -146,6 +172,7 @@ if __name__ == "__main__":
             f_m = f_x
             step = 3
 
+        # error ??? ####################################################################################################
         if step != 3:
             # step 12
             t = t + 1
