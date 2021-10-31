@@ -19,7 +19,7 @@ if __name__ == "__main__":
     plt.ylabel("y")
     plt.show()
 
-    fig1 = plt.contour(x, y, f, 25)
+    fig1 = plt.contour(x, y, f, 15)
     plt.clabel(fig1, inline='True')
     plt.title("Поиск минимума методом пчелиной колонии")
     t1 = time.time()
@@ -29,11 +29,8 @@ if __name__ == "__main__":
     left = -10
     right = 10
     step = 0
-    flag = 0
     iterations = 0
-    # parameters
     s = 10
-    # X = np.zeros((3, s))
     X = [[0] * s for i in range(3)]
     B = 3
     G = 3
@@ -43,7 +40,7 @@ if __name__ == "__main__":
     x_m = 0
     y_m = 0
     f_m = 0
-    while flag < 1:
+    while 1:
         iterations += 1
         if step != 3 and step != 4:
             # step 1
@@ -124,11 +121,6 @@ if __name__ == "__main__":
         x_x = X[0][arg]
         y_x = X[1][arg]
 
-        # plot
-        # if iterations % 5 == 0:
-        #     for i in range(len(X[0])):
-        #         plt.plot(X[0][i], X[1][i], X[2][i], '*')
-
         # step 11
         if f_x < f_m:
             x_m = x_x
@@ -147,8 +139,8 @@ if __name__ == "__main__":
 
         # step 14
         if R < e:
-            flag = 1
             print(f"\n\t x_min = {X[0][0]} y_min = {X[1][0]} f_min = {X[2][0]}")
+            plt.scatter(X[0][0], X[1][0], c="b")
             break
 
         # step 15
